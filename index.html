@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM-WARS: Mando de la Alianza</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <div id="logo-container">
+                <div id="logo">LOGO</div>
+            </div>
+            <nav>
+                <div id="nav-sections">
+                    <div class="nav-item active" onclick="showSection('hangar', this)"><h3>Sección 1</h3><p>Hangar Naves</p></div>
+                    <div class="nav-item" onclick="showSection('registro-pilotos', this)"><h3>Sección 2</h3><p>Registro Pilotos</p></div>
+                    <div class="nav-item" onclick="showSection('misiones-kanban', this)"><h3>Sección 3</h3><p>Misiones</p></div>
+                    <div class="nav-item" onclick="showSection('mando-alianza', this)"><h3>Sección 4</h3><p>Dashboard</p></div>
+                </div>
+            </nav>
+        </header>
+
+        <main>
+            <section id="hangar" class="section-container active-section">
+                <h1># 1 Hangar Naves <span class="page-subtitle">(Catálogo de naves)</span></h1>
+                <div class="controls-bar">
+                    <div class="filter-control">
+                        <i class="fa fa-caret-down"></i>
+                        <input type="text" placeholder="nombre nave...">
+                    </div>
+                </div>
+                <div class="hangar-grid">
+                    <div class="data-card" style="justify-content: center; align-items: center;"> 
+                        <i class="fa fa-fighter-jet" style="font-size: 5rem; color: var(--border-color);"></i>
+                        
+                    </div>
+                    <div class="data-card">
+                        <h2 id="piolin">Datos Técnicos</h2>
+                        <ul>
+                            <li>Nombre: X-Wing</li>
+                            <li>Tipo: Caza Estelar</li>
+                            <li>Velocidad: 100 MGLT</li>
+                            <li>Estado: Operativo</li>
+                        </ul>
+                        
+                    </div>
+                    <div class="description-card data-card">
+                        <h2 id="piolin">DESCRIPCIÓN</h2>
+                        <p>Caza estelar versátil de la Alianza Rebelde, conocido por su equilibrio entre velocidad y potencia de fuego.</p>
+                        
+                    </div>
+                </div>
+            </section>
+
+            <section id="registro-pilotos" class="section-container">
+                <h1># 2 Registro Pilotos | (Listado de Pilotos)</h1>
+                <div class="controls-bar">
+                    <button class="action-btn primary"><i class="fa fa-user-plus"></i> Añadir Piloto</button>
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr><th>Núm</th><th>Rango</th><th>Nombre</th><th>Nave</th><th>Victorias</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr class="pilot-row"><td>1</td><td>Capitán</td><td>Alex Thorne</td><td>Star-Fighter-X</td><td>15</td></tr>
+                            <tr class="pilot-row"><td>2</td><td>Teniente</td><td>Zara Khan</td><td>Void-Seeker-7</td><td>9</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="misiones-kanban" class="section-container">
+                <h1># 3 Panel de Misiones | (Kanban)</h1>
+                <div class="kanban-board">
+                    <div class="kanban-column">
+                        <div class="column-header"><h2>Pendiente</h2><span class="mission-count">1</span></div>
+                        <div class="column-content" ondrop="drop(event)" ondragover="allowDrop(event)">
+                            <div class="mission-card" draggable="true" ondragstart="drag(event)" id="m1">
+                                <div class="card-summary" onclick="toggleDetails('d1')">
+                                    <span>Infiltración</span> <i class="fa fa-chevron-down"></i>
+                                </div>
+                                <div class="card-details" id="d1" style="display:none; margin-top:10px;">
+                                    <p>Objetivo: Recuperar planos.</p>
+                                    <button class="action-btn primary" style="font-size: 0.7rem; padding: 5px;" onclick="moveNext('m1')">Avanzar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kanban-column" id="col-en-curso">
+                        <div class="column-header"><h2>En Curso</h2><span class="mission-count">0</span></div>
+                        <div class="column-content" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                    </div>
+                    <div class="kanban-column">
+                        <div class="column-header"><h2>Completada</h2><span class="mission-count">0</span></div>
+                        <div class="column-content" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="mando-alianza" class="section-container">
+                <h1># 4 Mando de la Alianza (DashBoard)</h1>
+                <div class="dashboard-grid">
+                    <div class="stats-column">
+                        <div class="stat-item">
+                            <div class="stat-header" onclick="toggleDashboard('det-naves')">
+                                <span>Naves en hangar: <span style="color:var(--accent-color);">24</span></span> <i class="fa fa-caret-down"></i>
+                            </div>
+                            <div id="det-naves" class="stat-content" style="display:none; padding:10px;">
+                                <ul><li>Operativas: 18</li><li>Reparación: 6</li></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="infographic-column" style="position:relative; height:200px;">
+                        <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); border:2px solid orange; padding:20px; border-radius:50%;">NÚCLEO</div>
+                        <i class="fa fa-rocket" style="position:absolute; top:10%; left:50%; color:orange;"></i>
+                        <i class="fa fa-user" style="position:absolute; top:50%; left:20%; color:orange;"></i>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="modal-overlay" class="modal-overlay">
+        <div class="pilot-edit-panel">
+            <div class="modal-header">
+                <h1 style="margin:0;">Edición Piloto</h1>
+                <button id="close-modal" class="close-btn">&times;</button>
+            </div>
+            <div style="display:flex; gap:20px;">
+                <div style="width:150px; height:150px; border:1px solid gray; display:flex; justify-content:center; align-items:center;">Avatar</div>
+                <form id="edit-form" style="flex:1; display:flex; flex-direction:column; gap:10px;">
+                    <input type="text" id="m-nombre" placeholder="Nombre">
+                    <input type="text" id="m-rango" placeholder="Rango">
+                    <button type="button" class="action-btn primary" onclick="closeModal()">Guardar Cambios</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
