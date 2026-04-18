@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interfaz de Mando de la Alianza - Gestión de Flota y Personal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <div id="logo-container">
+                <div id="logo">LOGO</div>
+            </div>
+            <nav>
+                <div id="nav-sections">
+                    <div class="nav-item"><h3>Sección 1</h3><p>Hangar Naves</p></div>
+                    <div class="nav-item"><h3>Sección 2</h3><p>Registro Pilotos</p></div>
+                    <div class="nav-item"><h3>Sección 3</h3><p>Misiones</p></div>
+                    <div class="nav-item"><h3>Sección 4</h3><p>Mando de la Alianza</p></div>
+                </div>
+            </nav>
+        </header>
+
+        <main>
+            <section id="hangar" class="section-container">
+                <h1># 1 Hangar Naves - Tieruo have <span class="page-subtitle">(Catálogo de naves)</span></h1>
+                
+                <div id="controls-bar" class="controls-bar">
+                    <div id="filter-control" class="filter-control">
+                        <i class="fa fa-caret-down"></i>
+                        <input type="text" placeholder="nombre nave - - - (x)">
+                    </div>
+                    <div id="sort-control">
+                        <span class="sort-label">[Nº/naves] Orden velocidad</span>
+                        <div id="sort-arrows">
+                            <i class="fa fa-caret-up"></i>
+                            <i class="fa fa-caret-down"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hangar-grid">
+                    <div id="nave-img"> 
+                        <img src="img/naves/1.png" alt="nave-X" width="50%"> 
+                        <div class="card-caption">Imagen (Fondo sin color)</div>
+                    </div>
+                    <div id="nave-datos" class="data-card">
+                        <ul>
+                            <li>Nombre</li>
+                            <li>Tipo</li>
+                            <li>Velocidad</li>
+                            <li>Tripulación máxima</li>
+                            <li>Estado</li>
+                        </ul>
+                        <div class="card-caption">Targeta 1 (color)</div>
+                    </div>
+                    <div id="nave-descrip" class="description-card">
+                        <h2>DESCRIPCIÓN</h2>
+                        <p>Erase una vez en una lejana galaxia...</p>
+                        <p>Un diseño clásico que ha servido a la Alianza durante generaciones.</p>
+                        <div class="card-caption">Targeta 2 (color)</div>
+                    </div>
+                </div>
+            </section>
+            <section id="registro-pilotos" class="section-container">
+                <h1># 2 Registro Pilotos | (Listado de Pilotos)</h1>
+
+                <div id="pilot-controls-bar" class="controls-bar">
+                    <div class="left-controls">
+                        <button class="action-btn primary add-pilot-btn">
+                            <i class="fa fa-user-plus"></i> Añadir Piloto
+                        </button>
+                    </div>
+                    <div class="right-controls">
+                        <div class="filter-control pilot-search">
+                            <input type="text" placeholder="Buscar piloto...">
+                            <i class="fa fa-search"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table id="tabla-pilotos" class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Núm</th>
+                                <th>Rango</th>
+                                <th>Nombre</th>
+                                <th>Nave</th>
+                                <th>Victorias</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="pilot-row" data-pilot-id="1">
+                                <td>1</td>
+                                <td>Capitán</td>
+                                <td>Alex Thorne</td>
+                                <td>Star-Fighter-X</td>
+                                <td>15</td>
+                            </tr>
+                            <tr class="pilot-row" data-pilot-id="2">
+                                <td>2</td>
+                                <td>Teniente</td>
+                                <td>Zara Khan</td>
+                                <td>Void-Seeker-7</td>
+                                <td>9</td>
+                            </tr>
+                            </tbody>
+                    </table>
+                </div>
+            </section>
+            <section id="pilot-edit" class="section-container pilot-edit-section">
+                <h1>Edicion piloto</h1>
+
+                <div class="panel pilot-edit-panel">
+                    <div class="panel-body">
+                        <div class="portrait-actions">
+                            <div class="portrait-placeholder">
+                                <div class="avatar-technical">
+                                    <div class="avatar-head"></div>
+                                    <div class="avatar-face-detail"></div>
+                                    <div class="avatar-body"></div>
+                                </div>
+                            </div>
+                            <div class="action-buttons-portrait">
+                                <button class="action-btn secondary modify-btn"><i class="fa fa-edit"></i> Modificar</button>
+                                <button class="action-btn danger delete-btn"><i class="fa fa-trash"></i> Eliminar</button>
+                            </div>
+                        </div>
+
+                        <div class="pilot-data-form">
+                            <form id="pilot-edit-form">
+                                <div class="input-group-technical">
+                                    <label for="p-name">nombre</label>
+                                    <input type="text" id="p-name" name="name" placeholder="Alex Thorne">
+                                </div>
+                                <div class="input-group-technical">
+                                    <label for="p-rank">rango</label>
+                                    <select id="p-rank" name="rank">
+                                        <option value="Capitán">Capitán</option>
+                                        <option value="Teniente">Teniente</option>
+                                        <option value="Alférez">Alférez</option>
+                                        <option value="Piloto Senior">Piloto Senior</option>
+                                    </select>
+                                </div>
+                                <div class="input-group-technical">
+                                    <label for="p-ship">nave asignada</label>
+                                    <input type="text" id="p-ship" name="ship" placeholder="Star-Fighter-X">
+                                </div>
+                                <div class="input-group-technical victories-group">
+                                    <label for="p-victories">victorias X</label>
+                                    <input type="number" id="p-victories" name="victories" placeholder="15">
+                                </div>
+                                <div class="input-group-technical status-group">
+                                    <label>estado</label>
+                                    <div class="status-selector-panel">
+                                        <div class="status-option active">
+                                            <i class="fa fa-check-circle"></i>
+                                            <span class="status-label">activo</span>
+                                        </div>
+                                        <div class="status-option">
+                                            <i class="fa fa-circle-notch"></i>
+                                            <span class="status-label">fuera</span>
+                                        </div>
+                                        <div class="status-option">
+                                            <i class="fa fa-ban"></i>
+                                            <span class="status-label">baja</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <div class="save-actions-panel">
+                                <button type="submit" form="pilot-edit-form" class="action-btn primary save-btn">
+                                    <i class="fa fa-save"></i> Persistir
+                                </button>
+                                
+                                <div class="validation-message-panel">
+                                    <p class="validation-text">Persistir/Validacion</p>
+                                    <p class="warning-text"><i class="fa fa-warning"></i> Warning / Alarma</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            </main>
+    </div>
+</body>
+</html>

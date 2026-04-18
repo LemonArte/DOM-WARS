@@ -1,0 +1,628 @@
+/* --- Estilos Globales --- */
+:root {
+    /* Paleta de colores de ciencia ficción */
+    --bg-color: #1a1a2e; /* Azul oscuro profundo para el fondo general */
+    --text-color: #e0e0e0; /* Gris claro para el texto principal */
+    --accent-color: #ff4500; /* Naranja brillante para acentos */
+    --panel-bg: #2d2d44; /* Azul grisáceo oscuro para paneles y tarjetas */
+    --border-color: #4a4a6e; /* Color de borde */
+    --nav-item-bg: #23233a; /* Fondo de elementos de navegación */
+    --active-nav-bg: #3c3c5a; /* Fondo de elemento de navegación activo */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Space Mono', monospace;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.app-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background: radial-gradient(circle at center, #242442 0%, #1a1a2e 100%); /* Efecto de fondo sutil */
+    border: 1px solid var(--border-color);
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+}
+
+.section-container {
+    display: none; /* Por defecto todas las secciones ocultas */
+}
+
+/* Para visualización estática SPA una tras otra */
+#hangar, #registro-pilotos, #pilot-edit {
+    display: block; 
+}
+
+
+/* --- Barra de Navegación Superior --- */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--border-color);
+    margin-bottom: 30px;
+}
+
+#logo-container {
+    flex: 0 0 100px; /* Ancho fijo para el contenedor del logo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#logo {
+    width: 80px;
+    height: 80px;
+    border: 3px solid var(--accent-color);
+    border-radius: 50%; /* Círculo como en el boceto */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--accent-color);
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-shadow: 0 0 10px rgba(255, 69, 0, 0.5);
+}
+
+nav {
+    flex: 1; /* Ocupa el espacio restante */
+    display: flex;
+    justify-content: flex-end;
+}
+
+#nav-sections {
+    display: flex;
+    gap: 15px;
+}
+
+.nav-item {
+    background-color: var(--nav-item-bg);
+    border: 1px solid var(--border-color);
+    padding: 10px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.nav-item:hover {
+    background-color: #2e2e4e;
+    border-color: var(--accent-color);
+}
+
+.nav-item.active {
+    background-color: var(--active-nav-bg);
+    border-color: var(--accent-color);
+}
+
+.nav-item h3 {
+    font-size: 0.9rem;
+    color: var(--accent-color);
+    margin-bottom: 5px;
+}
+
+.nav-item p {
+    font-size: 0.8rem;
+    color: var(--text-color);
+}
+
+/* --- Área de Contenido Principal --- */
+main {
+    padding: 10px;
+}
+
+h1 {
+    font-size: 1.8rem;
+    color: var(--accent-color);
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px rgba(255, 69, 0, 0.3);
+}
+
+.page-subtitle {
+    font-size: 1rem;
+    color: var(--text-color);
+    font-weight: normal;
+}
+
+/* --- Barra de Control Reutilizable --- */
+.controls-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--panel-bg);
+    border: 1px solid var(--border-color);
+    padding: 10px 20px;
+    margin-bottom: 30px;
+    border-radius: 10px; /* Consistencia */
+}
+
+/* Estilo para los controles de búsqueda */
+.filter-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid var(--border-color);
+    padding: 5px 10px;
+    background-color: rgba(0,0,0,0.1); 
+}
+
+.filter-control i {
+    color: var(--border-color);
+}
+
+.filter-control input {
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.9rem;
+    width: 100%;
+    outline: none;
+}
+
+#sort-control {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.sort-label {
+    font-size: 0.9rem;
+    color: var(--border-color);
+}
+
+#sort-arrows {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    color: var(--border-color);
+    cursor: pointer;
+}
+
+#sort-arrows i {
+    font-size: 0.8rem;
+}
+
+#sort-arrows i:hover {
+    color: var(--accent-color);
+}
+
+/* --- SECCIÓN 1: HANGAR NAVES (DEL FRAGMENTO ANTERIOR) --- */
+.hangar-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; 
+    gap: 20px;
+    align-items: start;
+}
+
+#nave-img, .data-card, .description-card {
+    background-color: var(--panel-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px; 
+    padding: 20px;
+    position: relative; 
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- Estilos para la Imagen (Sección Hangar) --- */
+#nave-img {
+    justify-content: center;
+    align-items: center;
+    background-color: transparent; 
+    border: none; 
+}
+
+#nave-img img {
+    max-width: 100%; 
+    height: auto;
+    filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5));
+}
+
+/* --- Estilos para las Tarjetas de Datos (Sección Hangar) --- */
+.data-card ul {
+    list-style: none; 
+}
+
+.data-card li {
+    padding: 8px 0;
+    border-bottom: 1px solid #3c3c5a;
+    display: flex;
+    justify-content: space-between;
+}
+
+.data-card li::before {
+    content: '- ';
+    color: var(--accent-color);
+}
+
+/* --- Estilos para la Descripción (Sección Hangar) --- */
+.description-card h2 {
+    color: var(--accent-color);
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.description-card p {
+    font-size: 0.85rem;
+    color: #b0b0c0;
+    margin-bottom: 10px;
+}
+
+/* --- Leyenda de la Tarjeta --- */
+.card-caption {
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 0.75rem;
+    color: #6a6a8e;
+}
+
+
+/* --- SECCIÓN 2: REGISTRO PILOTOS (NUEVO CONTENIDO ANTERIOR) --- */
+/* Específico de Registro Pilotos */
+#pilot-controls-bar .left-controls {
+    flex: 0 0 auto;
+}
+
+#pilot-controls-bar .right-controls {
+    flex: 0 0 400px;
+}
+
+/* Estilo de Botón de Acción Principal para "Añadir Piloto" */
+.action-btn.primary {
+    background-color: var(--accent-color);
+    color: var(--bg-color); 
+    border: none;
+    font-family: 'Space Mono', monospace;
+    font-weight: bold;
+    font-size: 0.9rem;
+    padding: 8px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 0 10px rgba(255, 69, 0, 0.3);
+}
+
+.action-btn.primary:hover {
+    background-color: #ff571a; /* Acento más ligero */
+    transform: translateY(-1px);
+}
+
+.action-btn.primary:active {
+    transform: translateY(1px);
+}
+
+/* Estilo de Botón Secundario y Peligro */
+.action-btn.secondary {
+    background-color: var(--nav-item-bg);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+}
+
+.action-btn.secondary:hover {
+    background-color: var(--active-nav-bg);
+    border-color: var(--accent-color);
+}
+
+.action-btn.danger {
+    background-color: rgba(180, 0, 0, 0.8);
+    color: white;
+    border: 1px solid rgba(180, 0, 0, 0.3);
+}
+
+.action-btn.danger:hover {
+    background-color: rgb(220, 0, 0);
+    box-shadow: 0 0 10px rgba(220, 0, 0, 0.3);
+}
+
+/* Estilo de Búsqueda específico para Registro Pilotos */
+.pilot-search {
+    border-radius: 5px; 
+}
+
+.pilot-search input::placeholder {
+    color: rgba(224, 224, 224, 0.3); 
+}
+
+.pilot-search i {
+    cursor: pointer;
+}
+
+
+/* --- Estilos Técnicos para la Tabla de Datos --- */
+.table-container {
+    overflow-x: auto; 
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--panel-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    overflow: hidden; 
+}
+
+/* Estilo de Cabecera - usando acento */
+.data-table thead th {
+    background-color: rgba(74, 74, 110, 0.3); 
+    border-bottom: 2px solid var(--border-color);
+    color: var(--accent-color);
+    font-size: 0.9rem;
+    font-weight: bold;
+    padding: 12px 15px;
+    text-align: center;
+    text-transform: uppercase;
+    text-shadow: 0 0 5px rgba(255, 69, 0, 0.3);
+}
+
+/* Estilo de Fila/Celda */
+.data-table tbody td {
+    border-bottom: 1px solid rgba(74, 74, 110, 0.3); 
+    padding: 10px 15px;
+    font-size: 0.85rem;
+    color: var(--text-color);
+    text-align: center;
+}
+
+/* Estilo de fila par/impar para lectura */
+.data-table tbody tr:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.05); 
+}
+
+/* Efecto hover en filas para interactividad */
+.data-table tbody tr:hover {
+    background-color: rgba(74, 74, 110, 0.1); 
+    cursor: pointer;
+}
+
+/* Ajustes de columnas específicas */
+.data-table tbody td:first-child {
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
+
+/* =========================================================================
+   --- ESTILOS PARA LA NUEVA SECCIÓN: EDICIÓN PILOTO (FINALES) ---
+   ========================================================================= */
+
+#pilot-edit {
+    padding-top: 30px; 
+}
+
+/* Estilos de Panel Técnico (reutilizando base) */
+.pilot-edit-panel {
+    background-color: var(--panel-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 30px;
+}
+
+.panel-body {
+    display: flex;
+    gap: 40px;
+    align-items: start;
+}
+
+/* Columna Izquierda: Retrato y Botones de Acción */
+.portrait-actions {
+    flex: 0 0 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.portrait-placeholder {
+    width: 200px;
+    height: 250px;
+    background-color: rgba(0,0,0,0.2); 
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Dibujando Avatar Técnico de CSS */
+.avatar-technical {
+    position: absolute;
+    bottom: -10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.avatar-head {
+    width: 60px;
+    height: 60px;
+    border: 3px solid var(--border-color);
+    border-radius: 50%;
+    position: relative;
+}
+
+.avatar-face-detail {
+    width: 20px;
+    height: 3px;
+    background-color: var(--border-color);
+    position: absolute;
+    top: 25px;
+    left: 17px;
+}
+
+.avatar-body {
+    width: 90px;
+    height: 60px;
+    border: 3px solid var(--border-color);
+    border-radius: 20px 20px 0 0;
+    margin-top: -5px;
+}
+
+.action-buttons-portrait {
+    display: flex;
+    gap: 15px;
+    width: 100%;
+}
+
+.action-buttons-portrait .action-btn {
+    flex: 1;
+    text-align: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    padding: 8px 5px;
+}
+
+/* Columna Derecha: Formulario de Datos */
+.pilot-data-form {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Grupos de Entrada Técnicos */
+.input-group-technical {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.input-group-technical label {
+    font-size: 0.8rem;
+    color: var(--border-color);
+    text-transform: capitalize;
+}
+
+.input-group-technical input,
+.input-group-technical select {
+    background-color: rgba(0,0,0,0.1); 
+    border: 1px solid rgba(74, 74, 110, 0.3);
+    border-radius: 5px;
+    color: var(--text-color);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.9rem;
+    padding: 10px 15px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.input-group-technical input:focus,
+.input-group-technical select:focus {
+    border-color: var(--accent-color);
+}
+
+.input-group-technical select option {
+    background-color: var(--panel-bg);
+}
+
+/* Ajustes para victorias (input-number) */
+.victories-group input {
+    width: 100px;
+    text-align: center;
+}
+
+/* Panel Selector de Estado Especial */
+.status-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.status-selector-panel {
+    display: flex;
+    gap: 10px;
+    background-color: rgba(0,0,0,0.2); 
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.status-option {
+    flex: 1;
+    border: 1px solid var(--border-color);
+    background-color: var(--nav-item-bg);
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.status-option i {
+    color: var(--border-color);
+}
+
+.status-option .status-label {
+    font-size: 0.85rem;
+    color: var(--text-color);
+    text-transform: capitalize;
+}
+
+/* Estado Activo (Seleccionado) */
+.status-option.active {
+    background-color: rgba(0, 180, 0, 0.1); 
+    border-color: green;
+}
+
+.status-option.active i {
+    color: green;
+}
+
+/* Botón Guardar y Paneles de Validación */
+.save-actions-panel {
+    margin-top: 30px;
+    display: flex;
+    align-items: start;
+    gap: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+}
+
+.save-actions-panel .save-btn {
+    flex: 0 0 auto;
+    font-size: 1rem;
+    padding: 12px 25px;
+}
+
+.validation-message-panel {
+    flex: 1;
+    font-size: 0.8rem;
+    color: var(--border-color);
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.validation-text {
+    font-style: italic;
+}
+
+.warning-text {
+    color: rgb(220, 0, 0); 
+    font-weight: bold;
+}
+
+.warning-text i {
+    margin-right: 5px;
+}
