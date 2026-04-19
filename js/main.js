@@ -2,11 +2,23 @@
 
 /* BLOQUE 1: Prevenimos la ejecución del JS hasta que la pagína haya sido cargada por completo */
 document.addEventListener('DOMContentLoaded', () => {
+    //1. CREA EL HANGAR
+    // Inicializa el hangar
+    generarHangar(naves);
 
-    //0. Reset de contadores de misión
+    // Evento input: Busca mientra escribe
+    document.getElementById('buscador-nave').addEventListener('input', filtrarNaves);
+
+    // Evento change: Filtra al cambiar el tipo
+    document.getElementById('filtro-tipo').addEventListener('change', filtrarNaves);
+
+    // Evento click para ordenar
+    document.getElementById('btn-ordenar-velocidad').addEventListener('click', ordenarPorVelocidad);
+    
+    //2. RESET CONTADOR MISIONES
     updateMissionCounters();
 
-    // 1. NAVEGACIÓN PRINCIPAL
+    // 3. NAVEGACIÓN PRINCIPAL
     const navItems = document.querySelectorAll('.nav-item');
     navItems.forEach(item => {
         item.addEventListener('click', (e) => {
@@ -15,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 2. ACORDEÓN DE MISIONES
+    // 4. ACORDEÓN DE MISIONES
     const cardSummaries = document.querySelectorAll('.card-summary');
     cardSummaries.forEach(summary => {
         summary.addEventListener('click', (e) => {
@@ -24,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 3. BOTONES DE AVANCE MISIONES
+    // 5. BOTONES DE AVANCE MISIONES
     const advanceBtns = document.querySelectorAll('.btn-move-siguiente');
     advanceBtns.forEach(btn => {
         btn.addEventListener('click', (e) => {
@@ -34,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 4. ACORDEÓN DASHBOARD
+    // 6. ACORDEÓN DASHBOARD
     const statHeaders = document.querySelectorAll('.estado-header');
     statHeaders.forEach(header => {
         header.addEventListener('click', (e) => {
@@ -43,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 5. DRAG & DROP KANBAN
+    // 7. DRAG & DROP KANBAN
     const draggableMissions = document.querySelectorAll('.draggable-mission');
     const dropZones = document.querySelectorAll('.drop-zone');
 
@@ -56,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
         zone.addEventListener('drop', drop);
     });
 
-    // 6. MODAL: ACTIVACIÓN
+    // 8. MODAL: ACTIVACIÓN
     // Escuchar clics en las filas de la tabla de pilotos
     const pilotRows = document.querySelectorAll('.pilot-row');
     pilotRows.forEach(row => {
@@ -69,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
         addPilotBtn.addEventListener('click', () => openModal());
     }
 
-    // 7. MODAL: CIERRE
+    // 9. MODAL: CIERRE
     const closeModalBtn = document.getElementById('cerrar-modal');
     const saveModalBtn = document.getElementById('btn-guardar-modal');
     
@@ -83,6 +95,48 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 });
+
+/*ARRAY DE NAVES*/
+
+const naves = 
+[
+    { 
+        nombre: "X-Wing",
+        tipo: "Caza", 
+        velocidad: 100, 
+        tripulacion: 1, 
+        estado: "operativa", 
+        icono: "fa-fighter-jet" 
+    },
+    { 
+        nombre: "Millennium Falcon", 
+        tipo: "Transporte", 
+        velocidad: 120, 
+        tripulacion: 4, 
+        estado: "operativa", 
+        icono: "fa-rocket" 
+    },
+    { 
+        nombre: "TIE Interceptor", 
+        tipo: "Caza", 
+        velocidad: 110, 
+        tripulacion: 1, 
+        estado: "en reparación", 
+        icono: "fa-fighter-jet" 
+    },
+    { 
+        nombre: "Nebulon-B", 
+        tipo: "Fragata", 
+        velocidad: 40, 
+        tripulacion: 900, 
+        estado: "operativa", 
+        icono: "fa-ship" 
+    }
+];
+
+/*VARIABLES FILTRO*/
+let navesFiltradas = [...naves];
+let ordenAscendente = true;
 
 
 /*DECLARACIÓN DE FUNCIONES*/
@@ -187,4 +241,62 @@ function updateMissionCounters() {
             counterSpan.textContent = missionCount;
         }
     });
+}
+
+/*GENERADOR HANGAR*/
+function generarHangar(listaNaves) {
+    const contenedor = document.getElementById('contenedor-naves');
+    const contador = document.getElementById('contador-naves');
+    
+    // Limpia el contenedor para evitar duplicados
+    contenedor.innerHTML = "";
+    
+    listaNaves.forEach(nave => {
+        const tarjeta = document.createElement('div');
+        tarjeta.className = "data-card"; // Reutilizamos tu CSS
+        
+        tarjeta.innerHTML = `
+            <div class="icon-card-centered" style="margin-bottom: 15px;">
+                <i class="fa ${nave.icono} card-icon-large"></i>
+            </div>
+            <h2 id="piolin">${nave.nombre}</h2>
+            <ul>
+                <li><strong id="rbd">Tipo:</strong> ${nave.tipo}</li>
+                <li><strong id="rbd">Velocidad:</strong> ${nave.velocidad} MGLT</li>
+                <li><strong id="rbd">Tripulación:</strong> ${nave.tripulacion}</li>
+                <li><strong id="rbd">Estado:</strong> 
+                    <span style="color: ${nave.estado === 'operativa' ? 'var(--active)' : 'orange'}">
+                        ${nave.estado}
+                    </span>
+                </li>
+            </ul>
+        `;
+        contenedor.appendChild(tarjeta);
+    });
+
+    contador.textContent = `Mostrando: ${listaNaves.length} naves`;
+}
+
+/*FILTRO DE BUSQUEDA*/
+function filtrarNaves() {
+    const textoBusqueda = document.getElementById('buscador-nave').value.toLowerCase();
+    const tipoSeleccionado = document.getElementById('filtro-tipo').value;
+
+    navesFiltradas = naves.filter(nave => {
+        const coincideNombre = nave.nombre.toLowerCase().includes(textoBusqueda);
+        const coincideTipo = tipoSeleccionado === "todos" || nave.tipo === tipoSeleccionado;
+        return coincideNombre && coincideTipo;
+    });
+
+    generarHangar(navesFiltradas);
+}
+
+/*ORDENARO POR VELOCIDAD*/
+function ordenarPorVelocidad() {
+    navesFiltradas.sort((a, b) => {
+        return ordenAscendente ? a.velocidad - b.velocidad : b.velocidad - a.velocidad;
+    });
+    
+    ordenAscendente = !ordenAscendente; // Alternamos para el próximo clic
+    generarHangar(navesFiltradas);
 }

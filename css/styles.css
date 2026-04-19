@@ -129,7 +129,7 @@ h1 {
     border: none; 
     padding: 8px 15px; 
     cursor: pointer; 
-    font-weight: bold; 
+     
 }
 
 /*Estilo para botones pequeños*/
@@ -139,8 +139,8 @@ h1 {
     padding: 5px;
 }
 
-input { 
-    background: rgba(0,0,0,0.3); 
+input, #filtro-tipo, #btn-ordenar-velocidad { 
+    background: var(--bg-color); 
     border: 1px solid var(--border-color); 
     color: white; 
     padding: 8px; 
@@ -288,7 +288,10 @@ input {
 
 /*Estilos para Dashboard*/
 .resaltado-text {
-    color: var(--accent-color, #ff4713);
+    color: var(--skywalker);
+    font-weight: 900;
+    margin-left: auto;
+    align-self: center
 }
 
 .estado-content {

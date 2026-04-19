@@ -29,32 +29,27 @@
                 <h1>Hangar Naves</h1>
                 <div class="controles">
                     <div class="filter-control">
-                        <!--Etiqueta para iconos clase fa (font awesome) para iconos-->
-                        <i class="fa fa-caret-down"></i>
-                        <input type="text" placeholder="nombre nave...">
+<!--NUEVO-->
+                        <i class="fa fa-search"></i>
+                        <input type="text" id="buscador-nave" placeholder = "Buscar por nombre...">
+                        <select id="filtro-tipo">
+                            <option value="todos">Todos los tipos</option>
+                            <option value="Caza">Cazas</option>
+                            <option value="Transporte">Transportes</option>
+                            <option value="Fragata">Fragatas</option>
+                        </select>
+                        <button id="btn-ordenar-velocidad">
+                            Ordenar Velocidad <i class="fa fa-sort"></i>
+                        </button>
+                    </div>
+                    <div id="contador-naves" class="resaltado-text">
+                        Mostrando: 0 naves
                     </div>
                 </div>
-                <div class="hangar-cuadricula">
-                    <div class="data-card icon-card-centered"> 
-                        <!--icono nave si no hay foto-->
-                        <i class="fa fa-fighter-jet card-icon-large"></i>
-                    </div>
-                    <div class="data-card">
-                        <h2 id="piolin">Datos Técnicos</h2>
-                        <ul>
-                            <li><strong id="rbd">Nombre</strong> X-Wing</li>
-                            <li><strong id="rbd">Tipo</strong> Caza Estelar</li>
-                            <li><strong id="rbd">Velocidad</strong> 100 MGLT</li>
-                            <li><strong id="rbd">Estado</strong> Operativo</li>
-                        </ul>
-                    </div>
-                    <div class="data-card">
-                        <h2 id="piolin">DESCRIPCIÓN</h2>
-                        <p>Caza estelar versátil de la Alianza Rebelde, conocido por su equilibrio entre velocidad y potencia de fuego.</p>
-                    </div>
+                <div id="contenedor-naves" class="hangar-cuadricula">
                 </div>
             </section>
-
+<!-- FIN NUEVO-->
             <section id="registro-pilotos" class="section-container">
                 <h1>Registro Pilotos</h1>
                 <div class="controles">
