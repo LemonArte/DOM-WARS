@@ -1,166 +1,174 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DOM-WARS by RBD</title>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="css/styles.css">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>DOM-WARS by RBD</title>
+	<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+	<link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <div class="contenedor-principal">
-        <header>
-            <div id="logo-container">
-                <div id="logo">LOGO</div>
-            </div>
-            <nav>
-                <div id="nav">
-                    <div class="nav-item active" data-section="hangar"><h3>Hangar Naves</h3></div>
-                    <div class="nav-item" data-section="registro-pilotos"><h3>Registro Pilotos</h3></div>
-                    <div class="nav-item" data-section="misiones-kanban"><h3>Misiones</h3></div>
-                    <div class="nav-item" data-section="mando-alianza"><h3>CONTROL</h3></div>
-                </div>
-            </nav>
-        </header>
+	<div class="contenedor-principal">
+		<header>
+			<div id="logo-container">
+				<div id="logo">LOGO</div>
+			</div>
+			<nav>
+				<div id="nav">
+					<div class="nav-item active" data-section="hangar"><h3>Hangar Naves</h3></div>
+					<div class="nav-item" data-section="registro-pilotos"><h3>Registro Pilotos</h3></div>
+					<div class="nav-item" data-section="misiones-kanban"><h3>Misiones</h3></div>
+					<div class="nav-item" data-section="mando-alianza"><h3>CONTROL</h3></div>
+				</div>
+			</nav>
+		</header>
 
-        <main>
-            <section id="hangar" class="section-container active-section">
-                <h1>Hangar Naves</h1>
-                <div class="controles">
-                    <div class="filter-control">
-<!--NUEVO-->
-                        <i class="fa fa-search"></i>
-                        <input type="text" id="buscador-nave" placeholder = "Buscar por nombre...">
-                        <select id="filtro-tipo">
-                            <option value="todos">Todos los tipos</option>
-                            <option value="Caza">Cazas</option>
-                            <option value="Transporte">Transportes</option>
-                            <option value="Fragata">Fragatas</option>
-                        </select>
-                        <button id="btn-ordenar-velocidad">
-                            Ordenar Velocidad <i class="fa fa-sort"></i>
-                        </button>
-                    </div>
-                    <div id="contador-naves" class="resaltado-text">
-                        Mostrando: 0 naves
-                    </div>
-                </div>
-                <div id="contenedor-naves" class="hangar-cuadricula">
-                </div>
-            </section>
-<!-- FIN NUEVO-->
-            <section id="registro-pilotos" class="section-container">
-                <h1>Registro Pilotos</h1>
-                <div class="controles">
-                    <button class="action-btn primary">
-                        <!--icono añadir-->
-                        <i class="fa fa-user-plus"></i> 
-                        Añadir Piloto
-                    </button>
-                </div>
-                <div class="table-container">
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>Núm</th>
-                                <th>Rango</th>
-                                <th>Nombre</th>
-                                <th>Nave</th>
-                                <th>Victorias</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="pilot-row">
-                                <td>1</td>
-                                <td>Capitán</td>
-                                <td>Alex Thorne</td>
-                                <td>Star-Fighter-X</td>
-                                <td>15</td>
-                            </tr>
-                            <tr class="pilot-row">
-                                <td>2</td>
-                                <td>Teniente</td>
-                                <td>Zara Khan</td>
-                                <td>Void-Seeker-7</td>
-                                <td>9</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
+		<main>
+			<section id="hangar" class="section-container active-section">
+				<h1>Hangar Naves</h1>
+				<div class="controles">
+					<div class="filter-control">
+						<!--Etiqueta para iconos clase fa font awesome para iconos-->
+						<i class="fa fa-search"></i>
+						<input type="text" id="buscador-naves" placeholder="nombre nave...">
+					</div>
+					<div class="filter-control">
+						<select id="filtro-tipo">
+							<option value="todas">Todos</option>
+						</select>
+					</div>
+					<button id="btn-ordenar" class="action-btn primary" type="button">Ordenar velocidad ↑</button>
+					<p class="contador-simple">Mostrando <span id="contador-naves">0</span> naves</p>
+				</div>
+				<div class="hangar-cuadricula" id="hangar-cuadricula"></div>
+			</section>
 
-            <section id="misiones-kanban" class="section-container">
-                <h1>Panel de Misiones</h1>
-                <div class="kanban-board">
-                    <div class="kanban-columna">
-                        <div class="columna-header"><h2>Pendiente</h2><span class="mision-contador">1</span></div>
-                        <div class="columna-content drop-zone">
-                            <div class="mission-card draggable-mission" draggable="true" id="m1">
-                                <div class="card-summary" data-target="d1">
-                                    <span>Infiltración</span> <i class="fa fa-chevron-down"></i>
-                                </div>
-                                <div class="card-details" id="d1">
-                                    <p>Objetivo: Recuperar planos.</p>
-                                    <button class="action-btn primary btn-peque btn-move-siguiente" data-mision-id="m1">Avanzar</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="kanban-columna" id="col-en-curso">
-                        <div class="columna-header"><h2>En Curso</h2><span class="mision-contador">0</span></div>
-                        <div class="columna-content drop-zone"></div>
-                    </div>
-                    <div class="kanban-columna">
-                        <div class="columna-header"><h2>Completada</h2><span class="mision-contador">0</span></div>
-                        <div class="columna-content drop-zone"></div>
-                    </div>
-                </div>
-            </section>
+			<section id="registro-pilotos" class="section-container">
+				<h1>Registro Pilotos</h1>
+				<div class="controles">
+					<button id="btn-abrir-form-piloto" class="action-btn primary" type="button">
+						<!--icono añadir-->
+						<i class="fa fa-user-plus"></i>
+						Añadir Piloto
+					</button>
+				</div>
+				<div class="table-container">
+					<table class="data-table">
+						<thead>
+							<tr>
+								<th>Núm</th>
+								<th>Rango</th>
+								<th>Nombre</th>
+								<th>Nave</th>
+								<th>Victorias</th>
+								<th>Estado</th>
+								<th>Acciones</th>
+							</tr>
+						</thead>
+						<tbody id="tabla-pilotos-body"></tbody>
+					</table>
+				</div>
+			</section>
 
-            <section id="mando-alianza" class="section-container">
-                <h1>Mando de la Alianza</h1>
-                <div class="control-grid">
-                    <div class="estado-column">
-                        <div class="estado-item">
-                            <div class="estado-header" data-target="detalles-naves">
-                                <span>Naves en hangar: <span class="resaltado-text">24</span></span> <i class="fa fa-caret-down"></i>
-                            </div>
-                            <div id="detalles-naves" class="estado-content">
-                                <ul>
-                                    <li>Operativas: 18</li>
-                                    <li>Reparación: 6</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="infografia-columna">
-                        <div class="nodo-core"><i id="rbd" class="fa fa-fighter-jet"></i></div>
-                        <i id="anakin" class="fa fa-rocket satellite-icon top"></i>
-                        <i id="anakin" class="fa fa-user satellite-icon left"></i>
-                    </div>
-                </div>
-            </section>
-        </main>
-    </div>
+			<section id="misiones-kanban" class="section-container">
+				<h1>Panel de Misiones</h1>
+				<div class="controles controles-formulario">
+					<form id="form-mision" class="form-simple">
+						<input type="text" id="mision-nombre" placeholder="Nombre misión">
+						<input type="text" id="mision-descripcion" placeholder="Descripción breve">
+						<select id="mision-piloto"></select>
+						<select id="mision-dificultad">
+							<option value="facil">Fácil</option>
+							<option value="media">Media</option>
+							<option value="dificil">Difícil</option>
+							<option value="suicida">Suicida</option>
+						</select>
+						<input type="date" id="mision-fecha">
+						<button class="action-btn primary" type="submit">Crear misión</button>
+					</form>
+					<select id="filtro-dificultad">
+						<option value="todas">Todas</option>
+						<option value="facil">Fácil</option>
+						<option value="media">Media</option>
+						<option value="dificil">Difícil</option>
+						<option value="suicida">Suicida</option>
+					</select>
+				</div>
+				<div class="kanban-board">
+					<div class="kanban-columna" data-estado="pendiente">
+						<div class="columna-header"><h2>Pendiente</h2><span class="mision-contador">0</span></div>
+						<div class="columna-content" data-estado="pendiente"></div>
+					</div>
+					<div class="kanban-columna" id="col-en-curso" data-estado="en-curso">
+						<div class="columna-header"><h2>En Curso</h2><span class="mision-contador">0</span></div>
+						<div class="columna-content" data-estado="en-curso"></div>
+					</div>
+					<div class="kanban-columna" data-estado="completada">
+						<div class="columna-header"><h2>Completada</h2><span class="mision-contador">0</span></div>
+						<div class="columna-content" data-estado="completada"></div>
+					</div>
+				</div>
+			</section>
 
-    <div id="modal-overlay" class="modal-overlay">
-        <div class="piloto">
-            <div>
-                <h1>Edición Piloto</h1>
-                <button id="cerrar-modal" class="cerrar-btn">&times;</button>
-            </div>
-            <div id="datos-tarjeta-piloto" class="piloto-card-container">
-                <div class="piloto-avatar">Avatar</div>
-                <form id="editar-form" class="editar-form">
-                    <input type="text" id="piloto-nombre" placeholder="Nombre">
-                    <input type="text" id="piloto-rango" placeholder="Rango">
-                    <button type="button" id="btn-guardar-modal" class="action-btn primary">Guardar Cambios</button>
-                </form>
-            </div>
-        </div>
-    </div>
+			<section id="mando-alianza" class="section-container">
+				<h1>Mando de la Alianza</h1>
+				<div class="control-grid">
+					<div class="estado-item">
+						<div class="estado-header"><span>Naves en hangar</span><span class="resaltado-text" id="total-naves">0</span></div>
+						<div class="estado-content" id="detalles-naves"></div>
+					</div>
+					<div class="estado-item">
+						<div class="estado-header"><span>Pilotos</span><span class="resaltado-text" id="total-pilotos">0</span></div>
+						<div class="estado-content" id="detalles-pilotos"></div>
+					</div>
+					<div class="estado-item">
+						<div class="estado-header"><span>Misiones</span><span class="resaltado-text" id="total-misiones">0</span></div>
+						<div class="estado-content" id="detalles-misiones"></div>
+					</div>
+					<div class="estado-item">
+						<div class="estado-header"><span>Mejores datos</span><span><i class="fa fa-chart-simple"></i></span></div>
+						<div class="estado-content bloque-fijo">
+							<p>Piloto con más victorias: <strong id="top-piloto">-</strong></p>
+							<p>Nave más rápida: <strong id="top-nave">-</strong></p>
+							<p>Misiones completadas</p>
+							<div class="barra-base">
+								<div class="barra-avance" id="barra-progreso"></div>
+							</div>
+							<p id="texto-progreso">0%</p>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+	</div>
 
-    <script src="js/main.js"></script>
+	<div id="modal-overlay" class="modal-overlay">
+		<div class="piloto">
+			<div class="modal-cabecera">
+				<h1>Edición Piloto</h1>
+				<button id="cerrar-modal" class="cerrar-btn" type="button">&times;</button>
+			</div>
+			<div id="datos-tarjeta-piloto" class="piloto-card-container">
+				<div class="piloto-avatar">Avatar</div>
+				<form id="editar-form" class="editar-form">
+					<input type="hidden" id="piloto-id">
+					<input type="text" id="piloto-nombre" placeholder="Nombre">
+					<input type="text" id="piloto-rango" placeholder="Rango">
+					<select id="piloto-nave"></select>
+					<input type="number" id="piloto-victorias" min="0" placeholder="Victorias">
+					<select id="piloto-estado">
+						<option value="activo">Activo</option>
+						<option value="herido">Herido</option>
+						<option value="kia">KIA</option>
+					</select>
+					<button type="submit" id="btn-guardar-modal" class="action-btn primary">Guardar Cambios</button>
+				</form>
+			</div>
+			<p id="mensaje-formulario" class="mensaje-formulario"></p>
+		</div>
+	</div>
+
+	<script src="js/main.js" defer></script>
 </body>
 </html>
