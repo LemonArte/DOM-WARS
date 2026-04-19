@@ -65,16 +65,22 @@ header {
 }
 
 #logo {
-	width: 60px;
-	height: 60px;
-	border: 2px solid var(--accent-color);
-	border-radius: 50%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	color: var(--accent-color);
+width: 60px; 
+    height: 60px; 
+    border: none; 
+    border-radius: 50%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    color: var(--accent-color);
+    overflow: hidden;
 }
 
+#logo img {
+    width: 100%;       /* Obliga a la imagen a medir 60px de ancho */
+    height: 100%;      /* Obliga a la imagen a medir 60px de alto */
+    object-fit: contain;
+}
 #nav {
 	display: flex;
 	gap: 10px;

@@ -15,7 +15,12 @@ const naves = [
 
 let pilotos = cargarDatos(STORAGE_PILOTOS, [
 	{ id: 1, rango: 'Capitán', nombre: 'Alex Thorne', nave: 'X-Wing', victorias: 15, estado: 'activo' },
-	{ id: 2, rango: 'Teniente', nombre: 'Zara Khan', nave: 'A-Wing', victorias: 9, estado: 'herido' }
+	{ id: 2, rango: 'Teniente', nombre: 'Zara Khan', nave: 'A-Wing', victorias: 9, estado: 'herido' },
+	{ id: 3, rango: 'Capitan', nombre: 'Luke Skywalker', nave: 'Y-Wing', victorias: 13, estado: 'activo' },
+	{ id: 4, rango: 'Teniente', nombre: 'Wedge Antilles', nave: 'A-Wing', victorias: 4, estado: 'herido' },
+	{ id: 5, rango: 'Teniente', nombre: 'Jek Porkins', nave: 'Nebulon-B', victorias: 7, estado: 'activo' },
+	{ id: 6, rango: 'Polizon', nombre: 'Joel Ruiz', nave: 'Millennium Falcon', victorias: 5, estado: 'herido' },
+	{ id: 7, rango: 'RBD WAY', nombre: 'Átoma XPeach', nave: 'A-Wing', victorias: 4, estado: 'KIA' }
 ]);
 
 
