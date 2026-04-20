@@ -2,14 +2,17 @@
 
 const STORAGE_PILOTOS = 'domwars_pilotos';
 const STORAGE_MISIONES = 'domwars_misiones';
+const AVATARES_DISPONIBLES = ['1.png', '2.png', '3.png', '4.png', '5.png', '6.png'];
+const RUTA_NAVES = 'img/naves/';
+const RUTA_AVATARES = 'img/pilotos/';
 
 
 const naves = [
-	{ id: 1, nombre: 'X-Wing', tipo: 'caza', velocidad: 100, tripulacion: 1, estado: 'operativa', icono: 'fa-fighter-jet', descripcion: 'Caza estelar versátil de la Alianza Rebelde.' },
-	{ id: 2, nombre: 'Millennium Falcon', tipo: 'transporte', velocidad: 105, tripulacion: 4, estado: 'operativa', icono: 'fa-shuttle-space', descripcion: 'Nave rápida y muy famosa.' },
-	{ id: 3, nombre: 'Nebulon-B', tipo: 'fragata', velocidad: 70, tripulacion: 920, estado: 'reparacion', icono: 'fa-space-shuttle', descripcion: 'Fragata de apoyo rebelde.' },
-	{ id: 4, nombre: 'A-Wing', tipo: 'caza', velocidad: 130, tripulacion: 1, estado: 'operativa', icono: 'fa-plane', descripcion: 'Interceptor muy rápido.' },
-	{ id: 5, nombre: 'Y-Wing', tipo: 'bombardero', velocidad: 80, tripulacion: 2, estado: 'destruida', icono: 'fa-plane', descripcion: 'Bombardero resistente.' }
+	{ id: 1, nombre: 'X-Wing', tipo: 'caza', velocidad: 100, tripulacion: 1, estado: 'operativa', icono: 'fa-fighter-jet', descripcion: 'Caza estelar versátil de la Alianza Rebelde.', imagen: 'x.png' },
+	{ id: 2, nombre: 'Millennium Falcon', tipo: 'transporte', velocidad: 105, tripulacion: 4, estado: 'operativa', icono: 'fa-shuttle-space', descripcion: 'Nave rápida y muy famosa.', imagen: 'm.png' },
+	{ id: 3, nombre: 'Nebulon-B', tipo: 'fragata', velocidad: 70, tripulacion: 920, estado: 'reparacion', icono: 'fa-space-shuttle', descripcion: 'Fragata de apoyo rebelde.', imagen: 'n.png' },
+	{ id: 4, nombre: 'A-Wing', tipo: 'caza', velocidad: 130, tripulacion: 1, estado: 'operativa', icono: 'fa-plane', descripcion: 'Interceptor muy rápido.', imagen: 'a.png' },
+	{ id: 5, nombre: 'Y-Wing', tipo: 'bombardero', velocidad: 80, tripulacion: 2, estado: 'destruida', icono: 'fa-plane', descripcion: 'Bombardero resistente.', imagen: 'y.png' }
 ];
 
 
@@ -133,6 +136,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	document.getElementById('form-mision').addEventListener('submit', guardarMision);
 	document.getElementById('filtro-dificultad').addEventListener('change', renderMisiones);
 
+	inicializarGaleriaAvatares();
+	seleccionarAvatar(archivo);
 
 });
 
@@ -273,25 +278,26 @@ function renderHangar() {
 	lista.forEach(nave => {
 		const div = document.createElement('div');
 		div.className = 'data-card';
+		/*Si hay nave la pone sino pone el icono*/
+		const imagenHTML = nave.imagen 
+            ? `<img src="${RUTA_NAVES}${nave.imagen}" alt="${nave.nombre}" class="nave-img-fit">`
+            : `<i class="fa ${nave.icono} card-icon-large"></i>`;
 		div.innerHTML = `
         <div class="icon-card-centered">
-        <!--icono nave si no hay foto-->
-        <i class="fa ${nave.icono} card-icon-large"></i>
+                ${imagenHTML}
         </div>
         <h2 id="piolin">Datos Técnicos</h2>
         <ul>
-        <li><strong id="rbd">Nombre</strong> ${nave.nombre}</li>
-        <li><strong id="rbd">Tipo</strong> ${nave.tipo}</li>
-        <li><strong id="rbd">Velocidad</strong> ${nave.velocidad} MGLT</li>
-        <li><strong id="rbd">Tripulación</strong> ${nave.tripulacion}</li>
-        <li><strong id="rbd">Estado</strong> ${nave.estado}</li>
+			<li><strong id="rbd">Nombre</strong> ${nave.nombre}</li>
+			<li><strong id="rbd">Tipo</strong> ${nave.tipo}</li>
+			<li><strong id="rbd">Velocidad</strong> ${nave.velocidad} MGLT</li>
+			<li><strong id="rbd">Tripulación</strong> ${nave.tripulacion}</li>
+			<li><strong id="rbd">Estado</strong> ${nave.estado}</li>
         </ul>
         <p class="nave-desc">${nave.descripcion}</p>
         `;
 		contenedor.appendChild(div);
 	});
-
-
 	document.getElementById('contador-naves').textContent = lista.length;
 }
 
@@ -304,14 +310,20 @@ function cambiarOrdenNaves() {
 
 
 function renderPilotos() {
-	const body = document.getElementById('tabla-pilotos-body');
-	body.innerHTML = '';
+    const body = document.getElementById('tabla-pilotos-body');
+    body.innerHTML = '';
 
+    pilotos.forEach((piloto, index) => {
+        const tr = document.createElement('tr');
+        tr.className = 'pilot-row';
+        
+        // Si no tiene avatar, ponemos un icono por defecto
+        const imgHtml = piloto.avatar 
+            ? `<img src="${RUTA_AVATARES}${piloto.avatar}" class="img-tabla">`
+            : `<i class="fa fa-user"></i>`;
 
-	pilotos.forEach((piloto, index) => {
-		const tr = document.createElement('tr');
-		tr.className = 'pilot-row';
-		tr.innerHTML = `
+        tr.innerHTML = `
+        <td>${imgHtml}</td>
         <td>${index + 1}</td>
         <td>${piloto.rango}</td>
         <td>${piloto.nombre}</td>
@@ -319,17 +331,43 @@ function renderPilotos() {
         <td>${piloto.victorias}</td>
         <td>${piloto.estado}</td>
         <td>
-        <button class="action-btn secundario btn-peque btn-editar" data-id="${piloto.id}" type="button">Editar</button>
-        <button class="action-btn eliminar btn-peque btn-eliminar" data-id="${piloto.id}" type="button">Eliminar</button>
+            <button class="action-btn secundario btn-peque btn-editar" data-id="${piloto.id}" type="button">Editar</button>
+            <button class="action-btn eliminar btn-peque btn-eliminar" data-id="${piloto.id}" type="button">Eliminar</button>
         </td>
         `;
-		body.appendChild(tr);
-	});
-
-
-	llenarSelectPilotosActivos();
+        body.appendChild(tr);
+    });
+    llenarSelectPilotosActivos();
 }
 
+function inicializarGaleriaAvatares() {
+    const galeria = document.getElementById('avatar-galeria');
+    galeria.innerHTML = '';
+
+    AVATARES_DISPONIBLES.forEach(archivo => {
+        const img = document.createElement('img');
+        img.src = `${RUTA_AVATARES}${archivo}`;
+        img.className = 'avatar-option';
+        img.dataset.archivo = archivo;
+        
+        img.addEventListener('click', () => seleccionarAvatar(archivo));
+        galeria.appendChild(img);
+    });
+}
+
+function seleccionarAvatar(archivo) {
+    // 1. Guardar el valor en el input oculto
+    document.getElementById('piloto-avatar-val').value = archivo;
+
+    // 2. Actualizar la vista previa
+    const preview = document.getElementById('avatar-preview');
+    preview.innerHTML = `<img src="${RUTA_AVATARES}${archivo}">`;
+
+    // 3. Resaltar en la galería
+    document.querySelectorAll('.avatar-option').forEach(img => {
+        img.classList.toggle('selected', img.dataset.archivo === archivo);
+    });
+}
 
 function abrirEdicionPilot(id) {
 	const piloto = pilotos.find(p => p.id === id);
@@ -343,6 +381,7 @@ function abrirEdicionPilot(id) {
 	document.getElementById('piloto-nave').value = piloto.nave;
 	document.getElementById('piloto-victorias').value = piloto.victorias;
 	document.getElementById('piloto-estado').value = piloto.estado;
+	if (piloto.avatar) seleccionarAvatar(piloto.avatar);
 }
 
 
@@ -350,27 +389,27 @@ function guardarPiloto(e) {
 	e.preventDefault();
 	const id = document.getElementById('piloto-id').value;
 	const nombre = document.getElementById('piloto-nombre').value.trim();
+	const avatar = document.getElementById('piloto-avatar-val').value;
 	const rango = document.getElementById('piloto-rango').value.trim();
 	const nave = document.getElementById('piloto-nave').value;
 	const victorias = Number(document.getElementById('piloto-victorias').value);
 	const estado = document.getElementById('piloto-estado').value;
 	const mensaje = document.getElementById('mensaje-formulario');
 
-
 	if (!nombre || !rango || !nave || victorias < 0 || Number.isNaN(victorias)) {
 		mensaje.textContent = 'Completa bien el formulario.';
 		return;
 	}
 
-
-	const pilotoNuevo = {
-		id: id ? Number(id) : Date.now(),
-		nombre,
-		rango,
-		nave,
-		victorias,
-		estado
-	};
+    const pilotoNuevo = {
+        id: id ? Number(id) : Date.now(),
+        nombre,
+        avatar,
+        rango,
+        nave,
+        victorias,
+        estado
+    };
 
 
 	if (id) {
@@ -378,7 +417,6 @@ function guardarPiloto(e) {
 	} else {
 		pilotos.push(pilotoNuevo);
 	}
-
 
 	guardarTodo();
 	renderPilotos();
@@ -559,6 +597,9 @@ function llenarSelectPilotosActivos() {
 function limpiarFormularioPiloto() {
 	document.getElementById('editar-form').reset();
 	document.getElementById('piloto-id').value = '';
+	document.getElementById('piloto-avatar-val').value = '';
+    document.getElementById('avatar-preview').innerHTML = '<i class="fa fa-user card-icon-large"></i>';
+    document.querySelectorAll('.avatar-option').forEach(img => img.classList.remove('selected'));
 	document.getElementById('mensaje-formulario').textContent = '';
 }
 
