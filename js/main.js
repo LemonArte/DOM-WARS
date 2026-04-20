@@ -35,7 +35,7 @@ let misiones = cargarDatos(STORAGE_MISIONES, [
 let ordenAscendente = true;
 
 
-/* BLOQUE 1: Prevenimos la ejecución del JS hasta que la pagína haya sido cargada por completo */
+//Prevenimos la ejecución del JS hasta que la pagína haya sido cargada por completo
 document.addEventListener('DOMContentLoaded', () => {
 
 	//0. Reset de contadores de misión
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	document.getElementById('mision-fecha').value = hoyTexto();
 
 
-	// 1. NAVEGACIÓN PRINCIPAL
+	//NAVEGACIÓN PRINCIPAL
 	const navItems = document.querySelectorAll('.nav-item');
 	navItems.forEach(item => {
 		item.addEventListener('click', (e) => {
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 
 
-	// 2. ACORDEÓN DE MISIONES
+	//ACORDEÓN DE MISIONES
 	const board = document.querySelector('.kanban-board');
 	board.addEventListener('click', (e) => {
 		const summary = e.target.closest('.card-summary');
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 
 
-	// 3. BOTONES DE AVANCE MISIONES
+	//BOTONES DE AVANCE MISIONES
 	board.addEventListener('click', (e) => {
 		const btn = e.target.closest('.btn-move-siguiente');
 		if (btn) {
@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-	// 4. MODAL: ACTIVACIÓN
+	//MODAL: ACTIVACIÓN
 	const tablaPilotosBody = document.getElementById('tabla-pilotos-body');
 	tablaPilotosBody.addEventListener('click', (e) => {
 		const btnEditar = e.target.closest('.btn-editar');
@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 
-	// 5. MODAL: CIERRE
+	//MODAL: CIERRE
 	const closeModalBtn = document.getElementById('cerrar-modal');
 	const saveModalBtn = document.getElementById('btn-guardar-modal');
 
@@ -144,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 /*DECLARACIÓN DE FUNCIONES*/
 
-
+//CAMBIA ENTRE SECCIONES DE LA WEB
 function showSection(sectionId, navElement) {
 	// 1. Gestionar Secciones: Usamos solo clases para que el CSS haga el trabajo
 	document.querySelectorAll('.section-container').forEach(sec => {
@@ -170,7 +170,7 @@ function showSection(sectionId, navElement) {
 	}
 }
 
-
+//MODAL PILOTOS
 function openModal() {
 	const modal = document.getElementById('modal-overlay');
 	if (modal) {
@@ -242,7 +242,7 @@ function updateMissionCounters() {
 	});
 }
 
-
+// RENDERIZADO GENERAL
 function renderAll() {
 	llenarSelectTipos();
 	llenarSelectNaves();
@@ -253,28 +253,29 @@ function renderAll() {
 	renderDashboard();
 }
 
-
+//HANGAR NAVES
 function renderHangar() {
 	const contenedor = document.getElementById('hangar-cuadricula');
 	const texto = document.getElementById('buscador-naves').value.toLowerCase().trim();
 	const tipo = document.getElementById('filtro-tipo').value;
-	let lista = [...naves];
 
+	//COPIA EL ARRAY PAR ANO MODIFICAR EL ORIGINAL
+	let lista = [...naves];
 
 	if (texto) {
 		lista = lista.filter(nave => nave.nombre.toLowerCase().includes(texto));
 	}
 
-
 	if (tipo !== 'todas') {
 		lista = lista.filter(nave => nave.tipo === tipo);
 	}
 
-
 	lista.sort((a, b) => ordenAscendente ? a.velocidad - b.velocidad : b.velocidad - a.velocidad);
+	
+	//LIMPIA EL CONTENIDO PREVIAMENTE
 	contenedor.innerHTML = '';
 
-
+	//PINTA LAS NAVES
 	lista.forEach(nave => {
 		const div = document.createElement('div');
 		div.className = 'data-card';
@@ -298,9 +299,9 @@ function renderHangar() {
         `;
 		contenedor.appendChild(div);
 	});
+	//ACTUALIZA EL CONTADOR
 	document.getElementById('contador-naves').textContent = lista.length;
 }
-
 
 function cambiarOrdenNaves() {
 	ordenAscendente = !ordenAscendente;
@@ -308,7 +309,7 @@ function cambiarOrdenNaves() {
 	renderHangar();
 }
 
-
+//PILOTOS
 function renderPilotos() {
     const body = document.getElementById('tabla-pilotos-body');
     body.innerHTML = '';
@@ -417,7 +418,7 @@ function guardarPiloto(e) {
 	} else {
 		pilotos.push(pilotoNuevo);
 	}
-
+	//GUARDA Y RESETEA
 	guardarTodo();
 	renderPilotos();
 	renderDashboard();
@@ -436,7 +437,7 @@ function eliminarPiloto(id) {
 	renderDashboard();
 }
 
-
+//MISIONES
 function renderMisiones() {
 	const filtro = document.getElementById('filtro-dificultad').value;
 	document.querySelectorAll('.columna-content').forEach(col => col.innerHTML = '');
@@ -508,6 +509,7 @@ function guardarMision(e) {
 	guardarTodo();
 	renderMisiones();
 	renderDashboard();
+	//LIMPIA EL FORMULARIO
 	document.getElementById('form-mision').reset();
 	document.getElementById('mision-fecha').value = hoyTexto();
 	llenarSelectPilotosActivos();
@@ -521,7 +523,7 @@ function eliminarMision(id) {
 	renderDashboard();
 }
 
-
+// DASHBOARD - CONTROL
 function renderDashboard() {
 	const totalNaves = naves.length;
 	const totalPilotos = pilotos.length;
@@ -603,7 +605,7 @@ function limpiarFormularioPiloto() {
 	document.getElementById('mensaje-formulario').textContent = '';
 }
 
-
+//GUARDAR Y CARGAR DATOS
 function guardarTodo() {
 	localStorage.setItem(STORAGE_PILOTOS, JSON.stringify(pilotos));
 	localStorage.setItem(STORAGE_MISIONES, JSON.stringify(misiones));
@@ -626,3 +628,10 @@ function cargarDatos(clave, base) {
 function hoyTexto() {
 	return new Date().toISOString().split('T')[0];
 }
+
+//CAMBIAR TEMA
+const logo = document.getElementById('logo');
+
+logo.addEventListener('click', () => {
+    document.body.classList.toggle('tema-claro');
+});

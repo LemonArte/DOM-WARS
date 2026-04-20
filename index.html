@@ -12,14 +12,16 @@
 	<div class="contenedor-principal">
 		<header>
 			<div id="logo-container">
-				<div id="logo"><img src="img/logo.png" alt="logo alianza rebelde"></div>
+				<button id="logo" type="button" aria-label="Cambiar tema">
+					<img src="img/logo.png" alt="logo alianza rebelde">
+				</button>
 			</div>
 			<nav>
 				<div id="nav">
 					<div class="nav-item active" data-section="hangar"><h3>Hangar Naves</h3></div>
 					<div class="nav-item" data-section="registro-pilotos"><h3>Registro Pilotos</h3></div>
 					<div class="nav-item" data-section="misiones-kanban"><h3>Misiones</h3></div>
-					<div class="nav-item" data-section="mando-alianza"><h3>CONTROL</h3></div>
+					<div class="nav-item dashboard" data-section="mando-alianza"><h3>CONTROL</h3></div>
 				</div>
 			</nav>
 		</header>
@@ -29,8 +31,6 @@
 				<h1>Hangar Naves</h1>
 				<div class="controles">
 					<div class="filter-control">
-						<!--Etiqueta para iconos clase fa font awesome para iconos-->
-						<i class="fa fa-search"></i>
 						<input type="text" id="buscador-naves" placeholder="nombre nave...">
 					</div>
 					<div class="filter-control">
