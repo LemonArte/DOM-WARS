@@ -18,7 +18,7 @@ const naves = [
 
 let pilotos = cargarDatos(STORAGE_PILOTOS, [
 	{ id: 1, rango: 'Capitán', nombre: 'Alex Thorne', nave: 'X-Wing', victorias: 15, estado: 'activo' },
-	{ id: 2, rango: 'Teniente', nombre: 'Zara Khan', nave: 'A-Wing', victorias: 9, estado: 'herido' },
+	{ id: 2, rango: 'Trianera', nombre: 'Florkilla de Sevilla', nave: 'A-Wing', victorias: 9, estado: 'herido' },
 	{ id: 3, rango: 'Capitan', nombre: 'Luke Skywalker', nave: 'Y-Wing', victorias: 13, estado: 'activo' },
 	{ id: 4, rango: 'Teniente', nombre: 'Wedge Antilles', nave: 'A-Wing', victorias: 4, estado: 'herido' },
 	{ id: 5, rango: 'Teniente', nombre: 'Jek Porkins', nave: 'Nebulon-B', victorias: 7, estado: 'activo' },
@@ -135,6 +135,13 @@ document.addEventListener('DOMContentLoaded', () => {
 	document.getElementById('editar-form').addEventListener('submit', guardarPiloto);
 	document.getElementById('form-mision').addEventListener('submit', guardarMision);
 	document.getElementById('filtro-dificultad').addEventListener('change', renderMisiones);
+
+	inicializarDragAndDrop();
+	
+	const btnExportar = document.getElementById('btn-exportar-datos');
+	if (btnExportar) {
+		btnExportar.addEventListener('click', exportarDatosAJSON);
+	}
 
 	inicializarGaleriaAvatares();
 	seleccionarAvatar(archivo);
@@ -442,12 +449,10 @@ function renderMisiones() {
 	const filtro = document.getElementById('filtro-dificultad').value;
 	document.querySelectorAll('.columna-content').forEach(col => col.innerHTML = '');
 
-
 	let lista = [...misiones];
 	if (filtro !== 'todas') {
 		lista = lista.filter(m => m.dificultad === filtro);
 	}
-
 
 	lista.forEach(mision => {
 		const columna = document.querySelector(`.columna-content[data-estado="${mision.estado}"]`);
@@ -456,8 +461,21 @@ function renderMisiones() {
 		if (mision.estado !== 'completada') {
 			boton = `<button class="action-btn primary btn-peque btn-move-siguiente" data-mision-id="${mision.id}" type="button">Avanzar</button>`;
 		}
+		
 		const card = document.createElement('div');
 		card.className = 'mission-card';
+        
+        //Efecto Drag & Drop
+        card.setAttribute('draggable', 'true');
+        card.addEventListener('dragstart', (e) => {
+            e.dataTransfer.setData('text/plain', mision.id);
+            card.classList.add('dragging');
+        });
+        card.addEventListener('dragend', () => {
+            card.classList.remove('dragging');
+        });
+        // ----------------------------------------
+
 		card.innerHTML = `
         <div class="card-summary" data-target="${detalleId}">
         <span>${mision.nombre}</span>
@@ -474,7 +492,6 @@ function renderMisiones() {
         `;
 		columna.appendChild(card);
 	});
-
 
 	updateMissionCounters();
 }
@@ -635,3 +652,60 @@ const logo = document.getElementById('logo');
 logo.addEventListener('click', () => {
     document.body.classList.toggle('tema-claro');
 });
+
+//FUNCIÓN DRAG & DROP
+
+// Configura las zonas donde se pueden soltar las tarjetas (Drop Zones)
+function inicializarDragAndDrop() {
+    const columnas = document.querySelectorAll('.columna-content');
+    
+    columnas.forEach(columna => {
+        columna.addEventListener('dragover', (e) => {
+            e.preventDefault(); // Necesario para permitir el "Drop"
+            columna.classList.add('drag-over');
+        });
+
+        columna.addEventListener('dragleave', () => {
+            columna.classList.remove('drag-over');
+        });
+
+        columna.addEventListener('drop', (e) => {
+            e.preventDefault();
+            columna.classList.remove('drag-over');
+            
+            const misionId = e.dataTransfer.getData('text/plain');
+            const nuevoEstado = columna.getAttribute('data-estado');
+            
+            // Buscamos la misión y le cambiamos el estado si es distinto
+            const mision = misiones.find(m => m.id === misionId);
+            if (mision && mision.estado !== nuevoEstado) {
+                mision.estado = nuevoEstado;
+                guardarTodo();
+                renderMisiones();
+                renderDashboard();
+            }
+        });
+    });
+}
+
+// FUNCIÓN EXPORTAR JSON
+function exportarDatosAJSON() {
+    const datosExportar = {
+        pilotos: pilotos,
+        misiones: misiones
+    };
+
+    const dataStr = JSON.stringify(datosExportar, null, 2);
+    const blob = new Blob([dataStr], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    
+    const enlace = document.createElement('a');
+    enlace.href = url;
+    const fecha = new Date().toISOString().split('T')[0];
+    enlace.download = `domwars_datos_${fecha}.json`;
+    
+    document.body.appendChild(enlace);
+    enlace.click();
+    document.body.removeChild(enlace);
+    URL.revokeObjectURL(url);
+}

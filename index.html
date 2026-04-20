@@ -86,7 +86,7 @@
 							<option value="suicida">Suicida</option>
 						</select>
 						<input type="date" id="mision-fecha">
-						<button class="action-btn primary" type="submit">Crear misión</button>
+						<button class="action-btn crea-mision" type="submit">Crear misión</button>
 					</form>
 					<select id="filtro-dificultad">
 						<option value="todas">Todas</option>
@@ -114,6 +114,11 @@
 
 			<section id="mando-alianza" class="section-container">
 				<h1>Mando de la Alianza</h1>
+				<div class="controles">
+					<button id="btn-exportar-datos" class="action-btn primary" type="button">
+						<i class="fa fa-download"></i> Exportar Datos (JSON)
+					</button>
+				</div>
 				<div class="control-grid">
 					<div class="estado-item">
 						<div class="estado-header"><span>Naves en hangar</span><span class="resaltado-text" id="total-naves">0</span></div>

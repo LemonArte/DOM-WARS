@@ -158,25 +158,34 @@ h1 {
 	background: var(--active);
 	border: 1px solid var(--border-color);
 	color: var(--text-color);
-
+	margin: 8px;
 	padding: 8px 15px;
 	cursor: pointer;
 	
+}
+
+.action-btn.crea-mision{
+	background: var(--active);
+	border: 1px solid var(--border-color);
+	color: var(--text-color);
+	padding: 8px 15px;
+	cursor: pointer;
 }
 
 .action-btn.secundario {
 	background: transparent;
 	color: var(--text-color);
 	border: 1px solid var(--border-color);
-	padding: 5px;
+	padding: 8px 15px;
 	cursor: pointer;
 }
 
 .action-btn.eliminar {
 	background: var(--accent-color);
-	color: var(--text-color);
+	color: var(--bg-color);
+	font-weight:bold;
 	border: none;
-	padding: 5px;
+	padding: 8px 15px;
 	cursor: pointer;
 }
 
@@ -570,4 +579,28 @@ body.tema-claro {
 
 #logo:hover {
     transform: scale(1.05); /* zoom al poner raton */
+}
+
+/*EFECTOS DRAG & DROP (KANBAN)*/
+.mission-card {
+    /* Tu código existente se mantiene, solo añadimos el cursor */
+    cursor: grab;
+}
+
+.mission-card:active {
+    cursor: grabbing;
+}
+
+.mission-card.dragging {
+    opacity: 0.5;
+    border: 2px dashed var(--skywalker);
+}
+
+.columna-content {
+    transition: background-color 0.2s ease;
+}
+
+.columna-content.drag-over {
+    background-color: rgba(0, 200, 81, 0.15); /* Usa tu color --active con transparencia */
+    border-radius: 8px;
 }
