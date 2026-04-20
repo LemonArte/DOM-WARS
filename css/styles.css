@@ -65,16 +65,22 @@ header {
 }
 
 #logo {
-	width: 60px;
-	height: 60px;
-	border: 2px solid var(--accent-color);
-	border-radius: 50%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	color: var(--accent-color);
+width: 60px; 
+    height: 60px; 
+    border: none; 
+    border-radius: 50%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    color: var(--accent-color);
+    overflow: hidden;
 }
 
+#logo img {
+    width: 100%;       /* Obliga a la imagen a medir 60px de ancho */
+    height: 100%;      /* Obliga a la imagen a medir 60px de alto */
+    object-fit: contain;
+}
 #nav {
 	display: flex;
 	gap: 10px;
@@ -134,13 +140,19 @@ h1 {
 	align-items: center;
 }
 
+#btn-abrir-form-piloto{
+	background-color: var(--skywalker);
+	font-weight: 900;
+}
+
 .action-btn.primary {
-	background: var(--skywalker);
+	background: var(--bg-color);
+	border: 1px solid var(--border-color);
 	color: white;
-	border: none;
+
 	padding: 8px 15px;
 	cursor: pointer;
-	font-weight: bold;
+	
 }
 
 .action-btn.secundario {
@@ -188,6 +200,8 @@ select {
 
 .contador-simple {
 	padding: 8px;
+	color: var(--skywalker);
+	font-weight:bolder;
 }
 
 /*#1 HANGAR*/
@@ -325,6 +339,8 @@ select {
 }
 
 .estado-header {
+	color: var(--skywalker);
+	font-size:xx-large;
 	padding: 15px;
 	display: flex;
 	justify-content: space-between;
@@ -337,6 +353,7 @@ select {
 
 .estado-content {
 	padding: 10px;
+	line-height: 1.7rem;
 }
 
 .bloque-fijo {

@@ -1,27 +1,116 @@
 /**DOM-WARS: Controlador Principal*/
 
-
 const STORAGE_PILOTOS = 'domwars_pilotos';
 const STORAGE_MISIONES = 'domwars_misiones';
 
 
 const naves = [
-	{ id: 1, nombre: 'X-Wing', tipo: 'caza', velocidad: 100, tripulacion: 1, estado: 'operativa', icono: 'fa-fighter-jet', descripcion: 'Caza estelar versátil de la Alianza Rebelde.' },
-	{ id: 2, nombre: 'Millennium Falcon', tipo: 'transporte', velocidad: 105, tripulacion: 4, estado: 'operativa', icono: 'fa-shuttle-space', descripcion: 'Nave rápida y muy famosa.' },
-	{ id: 3, nombre: 'Nebulon-B', tipo: 'fragata', velocidad: 70, tripulacion: 920, estado: 'reparacion', icono: 'fa-space-shuttle', descripcion: 'Fragata de apoyo rebelde.' },
-	{ id: 4, nombre: 'A-Wing', tipo: 'caza', velocidad: 130, tripulacion: 1, estado: 'operativa', icono: 'fa-jet-fighter-up', descripcion: 'Interceptor muy rápido.' },
-	{ id: 5, nombre: 'Y-Wing', tipo: 'bombardero', velocidad: 80, tripulacion: 2, estado: 'destruida', icono: 'fa-plane', descripcion: 'Bombardero resistente.' }
+	{ id: 1, 
+	nombre: 'X-Wing',  
+	tipo: 'caza', 
+	velocidad: 100, 
+	tripulacion: 1, 
+	estado: 'operativa', 
+	icono: 'fa-fighter-jet', 
+	descripcion: 'Caza estelar versátil de la Alianza Rebelde.' }, 
+
+	{ id: 2, 
+	nombre: 'Millennium Falcon', 
+	tipo: 'transporte', 
+	velocidad: 105, 
+	tripulacion: 4, 
+	estado: 'operativa', 
+	icono: 'fa-shuttle-space', 
+	descripcion: 'Nave rápida y muy famosa.' }, 
+
+	{ id: 3, nombre: 'Nebulon-B', 
+	tipo: 'fragata', 
+	velocidad: 70, 
+	tripulacion: 920, 
+	estado: 'reparacion', 
+	icono: 'fa-space-shuttle', 
+	descripcion: 'Fragata de apoyo rebelde.' }, 
+
+	{ id: 4, 
+	nombre: 'A-Wing', 
+	tipo: 'caza', 
+	velocidad: 130, 
+	tripulacion: 1, 
+	estado: 'operativa', 
+	icono: 'fa-plane', 
+	descripcion: 'Interceptor muy rápido.' }, 
+
+	{ id: 5, 
+	nombre: 'Y-Wing', 
+	tipo: 'bombardero', 
+	velocidad: 80, 
+	tripulacion: 2, 
+	estado: 'destruida', 
+	icono: 'fa-plane', 
+	descripcion: 'Bombardero resistente.' }
 ];
 
 
 let pilotos = cargarDatos(STORAGE_PILOTOS, [
-	{ id: 1, rango: 'Capitán', nombre: 'Alex Thorne', nave: 'X-Wing', victorias: 15, estado: 'activo' },
-	{ id: 2, rango: 'Teniente', nombre: 'Zara Khan', nave: 'A-Wing', victorias: 9, estado: 'herido' }
+	{ id: 1, 
+	rango: 'Capitán', 
+	nombre: 'Alex Thorne', 
+	nave: 'X-Wing', 
+	victorias: 15, 
+	estado: 'activo' }, 
+
+	{ id: 2, 
+	rango: 'Teniente', 
+	nombre: 'Zara Khan', 
+	nave: 'A-Wing', 
+	victorias: 9, 
+	estado: 'herido' }, 
+
+	{ id: 3, 
+	rango: 'Capitan', 
+	nombre: 'Luke Skywalker', 
+	nave: 'Y-Wing', 
+	victorias: 13, 
+	estado: 'activo' }, 
+
+	{ id: 4, 
+	rango: 'Teniente', 
+	nombre: 'Wedge Antilles', 
+	nave: 'A-Wing', 
+	victorias: 4, 
+	estado: 'herido' },
+
+	{ id: 5, 
+	rango: 'Teniente', 
+	nombre: 'Jek Porkins', 
+	nave: 'Nebulon-B', 
+	victorias: 7, 
+	estado: 'activo' },
+
+	{ id: 6, 
+	rango: 'Polizon', 
+	nombre: 'Joel Ruiz', 
+	nave: 'Millennium Falcon', 
+	victorias: 5, 
+	estado: 'herido' },
+
+	{ id: 7, 
+	rango: 'RBD WAY', 
+	nombre: 'Átoma XPeach', 
+	nave: 'A-Wing', 
+	victorias: 4, 
+	estado: 'KIA' }
 ]);
 
 
 let misiones = cargarDatos(STORAGE_MISIONES, [
-	{ id: 'm1', nombre: 'Infiltración', descripcion: 'Recuperar planos.', piloto: 'Alex Thorne', dificultad: 'media', fecha: hoyTexto(), estado: 'pendiente' }
+	{ id: 'm1', 
+	nombre: 'Infiltración', 
+	descripcion: 'Recuperar planos.', 
+	piloto: 'Alex Thorne', 
+	dificultad: 'media', 
+	fecha: hoyTexto(), 
+	estado: 'pendiente' }
 ]);
 
 
@@ -78,15 +167,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 
 
-	// 4. ACORDEÓN DASHBOARD
-	// No hace falta acordeón real para cumplir lo obligatorio
 
-
-	// 5. DRAG & DROP KANBAN
-	// No se añade porque es ampliación opcional
-
-
-	// 6. MODAL: ACTIVACIÓN
+	// 4. MODAL: ACTIVACIÓN
 	const tablaPilotosBody = document.getElementById('tabla-pilotos-body');
 	tablaPilotosBody.addEventListener('click', (e) => {
 		const btnEditar = e.target.closest('.btn-editar');
@@ -113,7 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 
-	// 7. MODAL: CIERRE
+	// 5. MODAL: CIERRE
 	const closeModalBtn = document.getElementById('cerrar-modal');
 	const saveModalBtn = document.getElementById('btn-guardar-modal');
 
