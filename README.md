@@ -9,4 +9,4 @@ Estructura:
 
 # Desarrolladores
 - Enrique Limones
-- Joel José Ruiz Marcote
+- Joel José Ruiz
