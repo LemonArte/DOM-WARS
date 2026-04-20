@@ -6,7 +6,7 @@ const AVATARES_DISPONIBLES = ['1.png', '2.png', '3.png', '4.png', '5.png', '6.pn
 const RUTA_NAVES = 'img/naves/';
 const RUTA_AVATARES = 'img/pilotos/';
 
-
+ 
 const naves = [
 	{ id: 1, nombre: 'X-Wing', tipo: 'caza', velocidad: 100, tripulacion: 1, estado: 'operativa', icono: 'fa-fighter-jet', descripcion: 'Caza estelar versátil de la Alianza Rebelde.', imagen: 'x.png' },
 	{ id: 2, nombre: 'Millennium Falcon', tipo: 'transporte', velocidad: 105, tripulacion: 4, estado: 'operativa', icono: 'fa-shuttle-space', descripcion: 'Nave rápida y muy famosa.', imagen: 'm.png' },
